@@ -69,7 +69,12 @@ Not that my LogManager code allows sub-modules to log to the same file. The adaf
 3742.330: MAChandler INFO - Frequency Plan is EU_863_870_TTN
 ```
 # Newbies to TTN & LoRaWAN?
-This code records the transmission duration each time so you can use that to adhere to legal duty cycles and TTNs' Fair Use Policy. The example code testTTN.py sticks to these limits and shows one way to do it.
+This code records the transmission duration each time so you can use that to adhere to legal duty cycles and TTNs' Fair Use Policy. The example code testTTN.py sticks to these limits and shows one way to do it. You can use this site to calculate the expected air time for your planned payload. https://avbentem.github.io/airtime-calculator/ttn/eu868.
+
+The calculator also indicates how many messages per hour can be sent at different SF values. The nearer your device is to a gateway the lower your SF can be and the faster your transmissions will be. Hence, more transmissions per hour but keep in mind the FUP limit below.
+
+Remember that you can reduce your playload size by 1 byte if you use port numbers to convey information. At SF11 this can make an 80ms difference in transmission speed.
+
 ## Duty Cycle
 You need to understand that there is, in some countries, a legal duty cycle limit. In the UK it is 1% which means you can transmit for 1 second then you have to wait 99 seconds before you transmit again. The law will not take kindly if you exceed that.
 ## Fair Use Policy (FUP)
