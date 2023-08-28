@@ -82,6 +82,12 @@ These have to obey the regional duty cycle
 You will have to set up an account on the TTN for your region so that you can create devices which can then join the network.
 ## RX Windows
 Following an uplink the server may, or may not, send you a message. This code switches to receive mode immediately after transmission then waits for the RX1 window to close then switches to RX2. The RX1 and RX2 frequencies are defined in the Frequency Plans for the various regions.
+# OTAA or ABP?
+TTN recommend using OTAA over ABP always.
+When you JOIN TTN using OTAA the server generates a new devaddr,nwkskey and appskey. With ABP these values are fixed which makes them discoverable if you are careless with your code. 
+
+With OTAA if you suspect foul play you can force a JOIN which invalidates the previous session keys. One way to do this would be add code for a downlink which tells your code to wipe the NVM data and reboot thus forcing a new join.
+
 # Limiting Uplink Size
 Each uplink packet includes a port number, which can be set when you send a message. By default the port number is 1. Port 0 is reserved for downlink MAC commands. Port numbers above 232 are reserved for TTN testing - not you!
 The port number is included in every transmission so can be used to reduce your payload data length by 1 byte if you want your app to route messages using if-else or switch (C) statements in your backend.
