@@ -14,7 +14,7 @@ storeage.remount("/",True)
 
 ## Managing logging level
 
-If the submodules are cross compiled to MPY bytecode then changing the logging level would require you to edit the PY files, cross compile to MPY then upload the files to the device. However, my LogManager provides a method to set all imported modules to the same log level. See Example\testTTN.py.
+If the submodules are cross compiled to MPY bytecode then changing the logging level would require you to edit the PY files, cross compile to MPY then upload the files to the device. However, my LogManager provides a method to set all imported modules to the same log level. See [Example/testTTN.py](../master/Example/testTTN.py).
 
 ## Partial Log Example
 
