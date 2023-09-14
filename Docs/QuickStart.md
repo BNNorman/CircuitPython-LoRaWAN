@@ -2,7 +2,7 @@
 
 Eager to get going? 
 
-# Step 1 - TTN Console setup
+## Step 1 - TTN Console setup
 
 1 Create an account on The Thngs Stack Community Edition. 
 
@@ -25,7 +25,7 @@ print(list(appeui))
 
 Now you need to setup your device and get it to join TTN in order to obtain the appskey used to decode message payloads
 
-# Setp 2 - Device Setup
+## Step 2 - Device Setup
 
 I developed the code on a Pico but if you are using an ESP32 you need to be aware that it may not have as much spare 
 memory is the Pico and that affects which code you should use.
@@ -37,41 +37,25 @@ the nologging-py and nologging-mpy folders have had all that lovely logging stri
 
 The mpy folders contain precompiled python bytecode using mpcross for the version of CircuitPython I used.
 
-## CircuitPython
+# CircuitPython
 
 The device code was developed with Adafruit CircuitPython 8.2.4. You will need to install it on your device from 
 https://circuitpython.org/downloads
 
-The compiled byte codes were prepared using the relevant mpycross compiler. The MPY files will load faster than the 
-PY files.
+## lib
 
-## Raspberry Pi Pico RP2040
-
-copy the code from src/dev-py/lib or src-dev-mpy/lib into your CIRCUITPY/lib folder.
-
-dev-py is recommended whilst testing as it contains logging to file (Useful for me if you need my help).
-
-## ESP32
-
-I used a DOIT ESP32 Development Board for testing.
-
-Due to reduced sram space I recommend you copy the code from src/nologging-py/lib or src/dev-mpy/lib into your 
-CIRCUITPY/lib folder. The latter (dev-mpy) includes logging but if space is an issue use the **nologging** mpy code.
+copy the files and folders from src/lib into your CIRCUITPY/lib folder.
 
 ## Example Code
 
-Copy all the Example code from the Example folder to the root folder on CIRCUITPY. If using code which provides 
-logging **DO NOT** reboot the device till everything is ready because the logging option requires write access to 
-the CIRCUITPY root folder and that makes the device read-only to you.
-
-**NOTE** if you are not using logging then you don't need to copy boot.py
+Copy all the Example code from the Example folder to the root folder on CIRCUITPY. You will need to reboot your device later so that testTTN.py can create a log file.
 
 ## Edit **settings.json**
 
-Settings.json is configured for a pico connected to an RFM95 - See hardware.md for pin numbering.
+Settings.json is configured for a pico connected to an RFM95 - See [Docs/Hardware.md](../master/Docs/Hardware.md) for pin numbering.
 
-It is also setup for the EU Frequency Plan. An example for AU_915_928_FSB_2 is included in the AU_Frequency_plan 
-folder. You could add the AU plan to settings.json and just change the frequency plan in the TTN section.
+It is also setup for the EU_868_870_TTN Frequency Plan. An example for AU_915_928_FSB_2 is included in the Frequency_plan 
+folder. To use the AU plan delete the two sections [TTN] and [EU_868_870_TTN] from settings.json and paste in the AU plan.
 
 You will need to edit this section and put your appeui,deveui and appkey values from the TTN device console in 
 
@@ -82,30 +66,28 @@ You will need to edit this section and put your appeui,deveui and appkey values 
             "devaddr": [0,0,0,0]
           },
 Leave the devaddr entry unchanged. This will force the code to join TTN when you first run it.
-The ABP section can be ignored TTN don't recommend using ABP (see https://www.thethingsindustries.
-com/docs/devices/abp-vs-otaa).
+The ABP section can be ignored TTN don't recommend using ABP (see https://www.thethingsindustries.com/docs/devices/abp-vs-otaa).
 
 
 # First Run
 
 Open up your TTN console so you can monitor activity for your device.
 
-If not using logging (see boot.py) then you can run the testTTN.py program immediately.
-If you are using logging, power cycle the device so that boot.py runs and configures the root folder are writeable.
+Power cycle the device so that boot.py runs and configures the root folder as writeable.
 
-I used Thonny for running the code - later you could make this automatic by editing code.py.
+I used Thonny for running the code - later you could make this automatic by editing code.py to do this:-
+```
+import testTTN
+```
 
-testTTN.py, when run, will try to join the TTN network. You should see log messages for uplinks and downlinks - if you 
-within range of a TTN gateway.
+testTTN.py, when run, will try to join the TTN network. You should see TTN console log messages for uplinks and downlinks in the TTN console - if you are within range of a TTN gateway. In particular you should see a JOIN REQUEST arriving from your device.
 
-If you don't see messages in the TTN you need to trouble shoot why. Start by clearing your NVM (see Utilities)
+If you don't see messages in the TTN console you need to trouble shoot why. You could be out of range of a gateway or too close. The latter will swamp the gateway receiver and garbage the signals. If you have your own gateway make sure you have a wall plus 15 feet of space between your device and the gateway. Mine shows a 55db signal strength and connects every time at that range.
 
-# Capturing your messages
+# Capturing your uplink messages
 
-You need a backend device to capture and use you device messages. TTN provides a number of integrations but my 
-example, in the TTN folder, is just using MQTT.
-
-
+You need a backend device to capture and use you device messages. TTN provides a number of integrations but [my 
+example](../master/Example/TTN.py) is just using MQTT and runs on Windows and should also run on linux.
 
 
 # Best Practises
