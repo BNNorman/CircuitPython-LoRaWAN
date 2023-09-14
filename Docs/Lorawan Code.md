@@ -1,4 +1,4 @@
-# Code.md
+# LoRaWAN Code.md
 
 The majority of the lorawan handler code is installed in the lib\lorawan folder on the CircuitPython device
 
@@ -12,7 +12,7 @@ LogManager.(m)py
 
 # lorawan folder
 
-LoRaWAN sub-folder, contains the encryption and loRaWAN message handlers.
-SX127x  sub-folder, contains the code required to drive the RFM9x devices.
-Config.(m)py        :loads the settings.json file
-LorawanHandler.(m)py: 
+LoRaWAN sub-folder  : contains the encryption and loRaWAN message handlers.
+SX127x  sub-folder  : contains the code required to drive the RFM9x devices.
+Config.(m)py        : loads the settings.json file
+LorawanHandler.(m)py: this provides a handler for joining, senduing uplinks and receiving downlinks

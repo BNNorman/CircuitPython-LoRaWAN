@@ -1,0 +1,61 @@
+"TTN": {
+        "NOTE":"These are the MAC defaults which may be replaced by MAC commands from server. They are cached on first run and saved to NVM.",
+        "device_class": "A",
+        "frequency_plan": "AU_915_928_FSB_2",
+        "max_power": 15,
+        "output_power": 14,
+        "sync_word": 52,
+        "rx_crc": 1,
+        "data_rate": 3,
+        "rx1_delay": 5,
+        "rx1_DR": 3,
+        "rx2_DR": 8,
+        "rx2_frequency": 923.3,
+        "rx2_delay": 1,
+        "rx_window": 1,
+        "fCntUp": 0,
+        "fCntDn": 0,
+        "auth_mode": "OTAA",
+		"NOTE2":"keys must be decimal not hex",
+			
+		"OTAA": {
+            "appeui": [0,0,0,0,0,0,0,0], 
+            "deveui": [0,0,0,0,0,0,0,0] ,
+            "appkey": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] ,
+            "devaddr": [0,0,0,0]
+          },
+          
+        "ABP": {
+            "devaddr": [0,0,0,0],
+            "nwskey": [0,0,0,0,0,0,0,0],
+			"appskey": [0,0,0,0,0,0,0,0],
+			"appeui": [0,0,0,0,0,0,0,0],
+            "appkey": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            "deveui": [0,0,0,0,0,0,0,0]
+        }
+    },
+
+"AU_915_928_FSB_2": {
+  "max_channels": 8,
+  "max_dr_offset": 5,
+  "max_dr_index": 14,
+  "lora_join_freqs": [916.8, 917.0, 917.2, 917.4, 917.6, 917.8, 918.0, 918.2],
+  "lora_tx_freqs": [916.8, 917.0, 917.2, 917.4, 917.6, 917.8, 918.0, 918.2],
+  "lora_rx1_freqs": [923.3, 923.9, 924.5, 925.1, 925.7, 926.3, 926.9, 927.5],
+  "TXPower": [20, 14, 11, 8, 5, 2],
+  "bandwidths": [7.8, 10.4, 15.6, 20.8, 31.25, 41.7, 62.5, 125.0, 250.0, 500.0],
+  "data_rates": [[12, 7], [11, 7], [10, 7], [9, 7], [8, 7], [7, 7], [8, 9], [8, 9], [12, 9], [11, 9], [10, 9], [9, 9], [8, 9], [7, 9], [7, 9], [7, 9]],
+  "sf_range": [7, 12],
+  "duty_cycle_range": [0.0, 100.0],
+  "duty_cycle_table": [[916.8, 918.2, 100.0]],
+  "DR_offset_table": [
+    [8, 8, 8, 8, 8, 8],
+    [9, 8, 8, 8, 8, 8],
+    [10, 9, 8, 8, 8, 8],
+    [11, 10, 9, 8, 8, 8],
+    [12, 11, 10, 9, 8, 8],
+    [13, 12, 11, 10, 9, 8],
+    [13, 13, 12, 11, 10, 9],
+    [9, 8, 8, 8, 8, 8]],
+  "maxEIRP": [8, 10, 12, 13, 14, 16, 18, 20, 21, 24, 26, 27, 29, 30, 33, 36]
+}

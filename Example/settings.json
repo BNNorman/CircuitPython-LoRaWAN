@@ -1,0 +1,68 @@
+{ "NOTE":"Comments not allowed, unless using this type of thing",
+    "BOARD": {
+        "NOTE":"Pins must be quoted. DIO pins are not required",
+        "RST": "GP22",
+        "SPI_BAUD": 5000000,
+        "SPI_PHASE":0,
+        "SPI_POLARITY":0,
+        "SPI_CH": 0,
+        "SPI_CS": "GP17",
+        "SPI_MISO": "GP16",
+        "SPI_MOSI":"GP19",
+        "SPI_CLK":"GP18",
+        "LED":"LED"
+    },
+    "TX_TIMEOUT": 10,
+    "TTN": {
+        "NOTE":"These are the MAC defaults which may be replaced by MAC commands from server. They are cached on first run and saved to NVM.",
+        "device_class": "A",
+        "frequency_plan": "EU_863_870_TTN",
+        "max_power": 15,
+        "output_power": 14,
+        "sync_word": 52,
+        "rx_crc": 1,
+        "data_rate": 3,
+        "rx1_delay": 5,
+        "rx1_DR": 3,
+        "rx2_DR": 3,
+        "rx2_frequency": 869.525,
+        "rx2_delay": 1,
+        "rx_window": 1,
+        "fCntUp": 0,
+        "fCntDn": 0,
+        "auth_mode": "OTAA",
+		"NOTE2":"keys must be decimal not hex",
+			
+		"OTAA": {
+            "appeui": [0,0,0,0,0,0,0,0], 
+            "deveui": [0,0,0,0,0,0,0,0] ,
+            "appkey": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] ,
+            "devaddr": [0,0,0,0]
+          },
+          
+        "ABP": {
+            "devaddr": [0,0,0,0],
+            "nwskey": [0,0,0,0,0,0,0,0],
+			"appskey": [0,0,0,0,0,0,0,0],
+			"appeui": [0,0,0,0,0,0,0,0],
+            "appkey": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            "deveui": [0,0,0,0,0,0,0,0]
+        }
+    },
+    "EU_863_870_TTN": {
+        "max_channels": 8,
+        "max_dr_offset": 5,
+        "max_dr_index": 7,
+        "join_freqs": [868.1,868.3,868.5],
+        "tx_freqs": [868.1,868.3,868.5,867.1,867.3,867.5,868.7,867.9],
+        "rx1_freqs": [868.1,868.3,868.5,867.1,867.3,867.5,868.7,867.9],
+        "TXPower": [20,14,11,8,5,2],
+        "bandwidths": [7.8,10.4,15.6,20.8,31.25,41.7,62.5,125.0,250.0,500.0],
+        "data_rates": [[12,7],[11,7],[10,7],[9,7],[8,7],[7,7],[7,8]],
+        "sf_range": [7,12],
+        "duty_cycle_range": [0.1,1.0],
+        "duty_cycle_table": [[863.0,868.0,1.0],[868.0,868.6,1.0],[868.7,869.2,0.1],[869.4,869.65,10.0],[869.7,870.0,1.0]],
+        "DR_offset_table": [[0,0,0,0,0,0],[1,0,0,0,0,0],[2,1,0,0,0,0], [3,2,1,0,0,0],[4,3,2,1,0,0],[5,4,3,2,1,0],[6,5,4,3,2,1],[7,6,5,4,3,2]],
+        "maxEIRP": [8,10,12,13,14,16,18,20,21,24,26,27,29,30,33,36]
+    }
+}

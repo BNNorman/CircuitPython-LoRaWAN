@@ -1,25 +1,50 @@
 # CircuitPython-LoRaWAN
-CircuitPython LoRaWAN code to work with the HopeRF RFM95 
 
-# Introduction
+LoRaWAN Spec 1.0.x compliant code using CircuitPython 8.x.x tested on a raspberry Pi Pico with the RFM95 transciever.
 
-This is a conversion of my dragino repo to work with Adafruit CircuitPython 8.2.0 on 2023-07-05; Raspberry Pi Pico with rp2040 connected to a HopeRF RFM95 module. The ESP32 MAY work but has less available memory and so mpcross needs to be used to shrink the files.
+The code supports class A and C device classes only.
+
+The main difference between class A and C is that class C devices are always listening for messages on the fixed RX2 
+frequency whereas class A devices put the transciever to sleep, after the RX2 window closes, to conserve battery.
+
+To work as class C the device must have joined TTN previously otherwise TTN will not know of its existence and therefore cannot send downlinks (Max of 10 per day).
+
+When the code starts up then, if the device class is C, the RFM9x tranceiver is configured to listen on the RX2 frequency. After sending uplinks the device would be left listening in the RX2 frequency. With class A devices the transceiver will be put to sleep.
+
+Check the Example testTTN.py to see how you should handle class C by checking if a message has been received in your program loop..
+
+Note that CircuitPython handles interrupts using countio which has to be queried (polled) periodically. For that reason this code only polls the RFM9x IRQ register for txDone and rxDone flags.
+
+# Logging
+
+The development code makes extensive use of logging. See Docs\Logging.md
+
+# Hardware
+
+
+See Docs\Hardware.md
+
+See also Docs\ESP32.md
+
+# Background
 
 The original dragino repo is available at https://github.com/BNNorman/dragino-1 and runs on a Raspberry Pi wearing a Dragino LoRa/GPS HAT.
 
-During conversion I have made efforts to try to improve/clean up the code.
+During the conversion I have made efforts to try to improve/clean up the code and tested it using CircuitPython V8.2.0
 
-The code is compliant with LoRa Specification 1.0.2.
+# Settings file and Cacheing
 
-# Parameter Cacheing
+See also Docs\Settings.md
 
 I would have preffered to keep the configuration file as a TOML but CircuitPython doesn't support sub-sections in TOML files hence I chose to change to a JSON format.
 
-When the code runs for the first time the configuration file (settings.json) is read in , cached, and provides the information required for the device to join TTN. The communication parameters are then cached and saved to NVM (Cacheing is a requirement of the LoRa Specification). If the TTN server sends us MAC commands to modify behaviour (output power, sf etc) then those parameters are updated in the cache and the NVM is updated.
+When the code runs for the first time the configuration file (settings.json) is read in and cached in memory. It is 
+then saved to NVM so that any changed parameters from TTN Server MAC downlinks are preserved. This is complient with the LoRaWAN spec.
 
-When you next run the code, after a successful join, the keys stored in NVM are used to populate the cache so that the end device can continue where it left off after a shutdown.
+When you next run the code (e.g. after a power cycle and after a previously successful join, the keys stored in NVM are 
+used to populate the memory cache so that the end device can continue where it left off.
 
-Note that, once the NVM has been written the contents of settings.json are largely ignored.
+Note that, once the NVM has been written the contents of settings.json are superceded by stored values. 
 
 The first two bytes of NVM are used to indicate the size of the JSON string stored. If you need to force a re-join, perhaps when testing, you should set the first two bytes to zero or oxffff (unused NVM values). For example:-
 ```
@@ -27,47 +52,20 @@ from microcontroller import nvm
 nvm[0:1]=bytearray([0,0])
 ```
 
+See settings.md for help on the settings.json file.
+
 # Logging
+
+
+See also Docs\Logging.md
+
 The development code uses a lot of logging to file which requires that you remount your filesystem rw. In boot.py add the following:-
 ```
 import storage
 storage.remount("/",False)
 ```
-then reboot your device.
+then reboot your device, but only after uploading the files.
 
-The logging library can be found here:-
-```
-[BNNorman/CircuitPython-logging-manager](https://github.com/BNNorman/CircuitPython-logging-manager)https://github.com/BNNorman/CircuitPython-logging-manager)
-```
-Note that it extends adafruit_logging by adding a label immediately after the timestamp as shown in this snippet. If you look in testTTN.py you can see how I configure all my library modules to allow ALL levels of log messages (LogMan.NOTSET) to change to logging only LogMan.WARNING or LogMan.CRITICAL.
-
-Not that my LogManager code allows sub-modules to log to the same file. The adafruit_logging module does not do that.
-
-```
-3735.885: JOIN_ACCEPT DEBUG - Loading
-3736.575: LorawanHandler DEBUG - Loading
-3737.593: board_config INFO - Configuring for board id=raspberry_pi_pico
-3738.405: MAChandler INFO - Loading
-3738.835: LorawanHandler DEBUG - init starting
-3738.979: LorawanHandler DEBUG - Get board config
-3739.096: LorawanHandler DEBUG - LorawanHandler calling BOARD setup
-3739.210: raspberry_pi_pico INFO - Setting up MCU raspberry_pi_pico
-3739.325: raspberry_pi_pico INFO - SPI Pins read from settings
-3739.443: raspberry_pi_pico INFO - SPI device setup completed.
-3740.688: raspberry_pi_pico INFO - MCU Device setup finished
-3740.811: LoraRadio INFO - resetting RFM9x
-3740.940: LoraRadio INFO - After reset() Mode : RX_LF
-3741.065: LoraRadio INFO - Set Mode : FSK_STDBY
-3741.208: LoraRadio INFO - Set Mode : SLEEP
-3741.334: LorawanHandler DEBUG - LoRaRadio has been setup
-3741.459: MAChandler DEBUG - MAC_Commands init
-3741.585: MAChandler INFO - Frequency plan is EU_863_870_TTN
-3741.711: MAChandler INFO - NVM is empty. Could be first run.
-3741.963: MAChandler INFO - NVM not set. Using [TTN] section as defaults
-3742.084: MAChandler INFO - Setting default MAC cache values using user config values
-3742.208: MAChandler INFO - loading frequency plan
-3742.330: MAChandler INFO - Frequency Plan is EU_863_870_TTN
-```
 # Newbies to TTN & LoRaWAN?
 This code records the transmission duration each time so you can use that to adhere to legal duty cycles and TTNs' Fair Use Policy. The example code testTTN.py sticks to these limits and shows one way to do it. You can use this site to calculate the expected air time for your planned payload. https://avbentem.github.io/airtime-calculator/ttn/eu868.
 
@@ -97,15 +95,9 @@ With OTAA if you suspect foul play you can force a JOIN which invalidates the pr
 Each uplink packet includes a port number, which can be set when you send a message. By default the port number is 1. Port 0 is reserved for downlink MAC commands. Port numbers above 232 are reserved for TTN testing - not you!
 The port number is included in every transmission so can be used to reduce your payload data length by 1 byte if you want your app to route messages using if-else or switch (C) statements in your backend.
 # Message Counter
-Each uplink message contains a 2 byte counter which is a protection against replay attacks. The counter is incremented for each message. If another message arrives at the TTN server with a lower value counter then the TTN server will ignore it till it exceeds the last counter value.
+Each uplink message contains a 2 byte counter (FCntUp) which is a protection against replay attacks. The counter is incremented for each message. If another message arrives at the TTN server with a lower value counter then the TTN server will ignore it till it exceeds the last counter value.
 
 If you cause the code to rejoin TTN then the server counter is reset to zero. Rejoining means your device will get a new devaddr,nwkskey and appskey.
 
-# Interrupts and Polling
 
-CircuitPython does not play nicely with interrupts. For that reason this code Polls the RFM95 interrupt register for TxDone and RxDone. Since the RX1 window and RX2 windows are approximately 6 seconds you will have to factor that into your sensor reading frequency.
-
-# Development Hardware
-
-Here is my RPi Pico connected to an HopeRF RFM95 which I used for testing
 

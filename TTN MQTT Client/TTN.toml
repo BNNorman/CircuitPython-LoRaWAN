@@ -1,0 +1,14 @@
+#######################################################
+#
+# SpeedSignMonitor
+#
+#######################################################
+[settings]
+    logFile="dragino-dev.log"
+    app_id = 'bnn-dragino-test' # username
+    api_key="NNSXS.L4PMC4ZLRHPH6WXNR4GM3545RDPKLYXBTXSMXRY.OWUCXGMTHQC6N3FJKU2POMDLNT3MMOANL63ZNQRQ4GWTTSFC6YMQ"
+    ttnBroker="eu1.cloud.thethings.network"
+    port=8883 # TLS
+    keepAlive=60
+
+
