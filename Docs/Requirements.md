@@ -2,10 +2,9 @@
 
 ## CircuitPython
 
+Download the pico flavour of CircuitPython from here:-
+
 https://circuitpython.org/board/raspberry_pi_pico/
-
-
-https://circuitpython.org/board/doit_esp32_devkit_v1/
 
 
 # additional libraries
