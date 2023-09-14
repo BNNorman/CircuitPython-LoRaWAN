@@ -6,7 +6,7 @@ The majority of the lorawan handler code is installed in the lib\lorawan folder 
 
 * adafruit_logging.mpy
 * adafruit_bus_device
-* LogManager.py - see [Docs/Logging.md](../blob/master/Docs/Logging.md)
+* LogManager.py - see [Docs/Logging.md](../master/Docs/Logging.md)
 
 # lorawan folder
 
