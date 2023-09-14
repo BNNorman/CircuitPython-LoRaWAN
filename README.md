@@ -11,7 +11,7 @@ To work as class C the device must have joined TTN previously otherwise TTN will
 
 When the code starts up then, if the device class is C, the RFM9x tranceiver is configured to listen on the RX2 frequency. After sending uplinks the device would be left listening in the RX2 frequency. With class A devices the transceiver will be put to sleep.
 
-Check [Example/testTTN.py](../tree/master/Example/testTTN.py) to see how you should handle class C by checking if a message has been received in your program loop..
+Check [Example/testTTN.py](../master/Example/testTTN.py) to see how you should handle class C by checking if a message has been received in your program loop..
 
 Note that CircuitPython handles interrupts using countio which has to be queried (polled) periodically. For that reason this code only polls the RFM9x IRQ register for txDone and rxDone flags. There is no need to connect the transceiver DIO interrupt pins.
 
@@ -22,17 +22,17 @@ The code is a conversion of my original dragino repo which is available at https
 During the conversion I have made efforts to try to improve/clean up the code and tested it using CircuitPython V8.2.0 on a RPi connected to an RFM95 transceiver
 # Logging
 
-The code makes extensive use of logging to file. See [Docs/Logging.md](../blob/master/Docs/Logging.md)
+The code makes extensive use of logging to file. See [Docs/Logging.md](../master/Docs/Logging.md)
 
 # Hardware
 
-See [Docs/Hardware.md](../blob/master/Docs/Hardware.md)
+See [Docs/Hardware.md](../master/Docs/Hardware.md)
 
-See also [Docs/ESP32.md](../blob/master/Docs/ESP32.md)
+See also [Docs/ESP32.md](../master/Docs/ESP32.md)
 
 # Settings file and Cacheing
 
-See also [Docs/Settings.md](../blob/master/Docs/Settings.md)
+See also [Docs/Settings.md](../master/Docs/Settings.md)
 
 I would have preffered to keep the configuration file as a TOML but CircuitPython doesn't support sub-sections in TOML files hence I chose to change to a JSON format.
 
@@ -51,7 +51,7 @@ nvm[0:1]=bytearray([0,0])
 ```
 See Utilities.
 
-See [Docs/Settings.md](../blob/master/Docs/Settings.md) for help on the settings.json file.
+See [Docs/Settings.md](../master/Docs/Settings.md) for help on the settings.json file.
 
 # Newbies to TTN & LoRaWAN?
 This code records the transmission duration each time so you can use that to adhere to legal duty cycles and TTNs' Fair Use Policy. The example code testTTN.py sticks to these limits and shows one way to do it. You can use this site to calculate the expected air time for your planned payload. https://avbentem.github.io/airtime-calculator/ttn/eu868.
