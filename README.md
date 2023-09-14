@@ -11,7 +11,7 @@ To work as class C the device must have joined TTN previously otherwise TTN will
 
 When the code starts up then, if the device class is C, the RFM9x tranceiver is configured to listen on the RX2 frequency. After sending uplinks the device would be left listening in the RX2 frequency. With class A devices the transceiver will be put to sleep.
 
-Check [Example/testTTN.py](../blob/master/Example/testTTN.py) to see how you should handle class C by checking if a message has been received in your program loop..
+Check [Example/testTTN.py](../tree/master/Example/testTTN.py) to see how you should handle class C by checking if a message has been received in your program loop..
 
 Note that CircuitPython handles interrupts using countio which has to be queried (polled) periodically. For that reason this code only polls the RFM9x IRQ register for txDone and rxDone flags. There is no need to connect the transceiver DIO interrupt pins.
 
