@@ -130,6 +130,6 @@ else:
 
 if CLEAR_NVM_AFTER:
     nvm[0:2]=bytearray([0x00,0x00])
-    log.info("NVM cleared after this code run")
+    Log.info("NVM cleared after this code run")
 
 LogMan.close()
