@@ -29,7 +29,7 @@ log.info(f"Configuring for board id={board.board_id}")
 
 # can this be done using variables?
 if board.board_id=="raspberry_pi_pico":
-    from .boards.Raspberry_Pi_Pico import MCU as BOARD
+    from .boards.raspberry_pi_pico import MCU as BOARD
 elif board.board_id=="doit_esp32_devkit_v1":
     from .boards.doit_esp32_devkit_v1 import MCU as BOARD
 else:
